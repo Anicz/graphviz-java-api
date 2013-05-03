@@ -72,6 +72,7 @@ import java.util.Properties;
  */
 public class GraphViz
 {
+	
 	/**
 	 * Detects the client's operating system.
 	 */
@@ -111,6 +112,8 @@ public class GraphViz
 	 * Define the index in the image size array.
 	 */
 	private int currentDpiPos = 7;
+
+	private String dotEncoding = "UTF-8";
 
 	/**
 	 * Increase the image size (dpi).
@@ -167,6 +170,13 @@ public class GraphViz
 	public void addln(String line) {
 		this.graph.append(line + "\n");
 	}
+	
+	/**
+	 * Adds lines of Strings to the graph's source.
+	 */
+	public void addlns(StringBuilder lines) {
+		this.graph.append(lines);
+	}	
 
 	/**
 	 * Adds a newline to the graph's source.
@@ -286,7 +296,7 @@ public class GraphViz
 		File temp;
 		try {
 			temp = File.createTempFile("graph_", ".dot.tmp", new File(GraphViz.TEMP_DIR));
-			FileWriter fout = new FileWriter(temp);
+			BufferedWriter fout = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(temp), dotEncoding));
 			fout.write(str);
 			fout.close();
 		}
